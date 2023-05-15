@@ -8,15 +8,18 @@ class ProductController extends Controller
 {
     function addProduct(Request $req)
     {
-        $product = new Product;
+        $product
+         = new Product;
         $product->title = $req->input("title");
         $product->price = $req->input("price");
         $product->description = $req->input("description");
 
-      
-        $image_name = time().'.'.$req->image->extension();  
-        $req->file->move(public_path('uploads'), $image_name);
-        $product->image =$image_name;
+        if ($image = $req->file('image')) {
+            $imageDestinationPath = 'uploads/';
+            $productImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($imageDestinationPath, $productImage);
+            $product->image = $productImage;
+        }
 
         $product->save();
         return $req->input();
