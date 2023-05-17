@@ -24,3 +24,8 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/profile', [UserController::class, 'profile']);
 Route::post('/addproduct',[ProductController::class,'addProduct']);
 
+Route::get('/collection', [ProductController::class, 'Display']);
+
+Route::get('detail/{id}',[ProductController::class,'viewDetail']);
+
+
