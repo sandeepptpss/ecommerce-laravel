@@ -35,6 +35,25 @@ public function viewDetail($id){
   
 }
 
+public function updateProduct(Request $req){
+    $product = Product::find($req->id);
+    $product->title = $req->input("title");
+    $product->price = $req->input("price");
+    $product->description = $req->input("description");
+    if ($image = $req->file('image')){
+        $imageDestinationPath = 'upload/';
+        $productImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        $image->move($imageDestinationPath, $productImage);
+        $product->image = $productImage;
+    }
+    $product->save();
+    return $product;
+    }
+
+    public function editPost($id){
+        $product = Product::find($id);
+        return $product;
+    }
    
 
 
